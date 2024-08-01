@@ -19,23 +19,23 @@ router.post(
     { name: "headerBackground", maxCount: 1 },
     { name: "icon", maxCount: 1 },
   ]),
-  authMiddleware,
+
   createShop
 );
-router.get("/shops", authMiddleware, getAllShops);
-router.get("/shops/:id", authMiddleware, getShopById);
+router.get("/shops", getAllShops);
+router.get("/shops/:id", getShopById);
 router.put(
   "/shops/:id",
-  authMiddleware,
+
   upload.fields([
     { name: "headerBackground", maxCount: 1 },
     { name: "icon", maxCount: 1 },
   ]),
   updateShopById
 );
-router.delete("/shops/:id", authMiddleware, deleteShopById);
-router.get("/shops/category/:id", authMiddleware, getShopByCategory);
-router.get("/shops/city/:id", authMiddleware, getShopByCity);
-router.get("/shops/owner/:id", authMiddleware, getShopByOwnerId);
+router.delete("/shops/:id", deleteShopById);
+router.get("/shops/category/:id", getShopByCategory);
+router.get("/shops/city/:id", getShopByCity);
+router.get("/shops/owner/:id", getShopByOwnerId);
 
 export default router;

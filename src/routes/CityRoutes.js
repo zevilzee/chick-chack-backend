@@ -10,10 +10,10 @@ import authMiddleware from "../middlewares/JwtAuth.js";
 
 const router = express.Router();
 
-router.post("/cities", authMiddleware, createCity);
-router.get("/cities", authMiddleware, getAllCities);
-router.get("/cities/:id", authMiddleware, getCityById);
-router.put("/cities/:id", authMiddleware, updateCityById);
-router.delete("/cities/:id", authMiddleware, deleteCityById);
+router.post("/cities", createCity);
+router.get("/cities", getAllCities);
+router.get("/cities/:id", getCityById);
+router.put("/cities/:id", updateCityById);
+router.delete("/cities/:id", deleteCityById);
 
 export default router;
