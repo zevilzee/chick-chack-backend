@@ -3,8 +3,14 @@ import City from "../models/CityModel.js";
 // Create a new city
 export const createCity = async (req, res) => {
   try {
-    const { cityName, location } = req.body;
-    const newCity = new City({ cityName, location });
+    const { cityName, location, shopIds } = req.body;
+    const swipperPhotos = req.files.map((file) => file.path);
+    const newCity = new City({
+      cityName,
+      location,
+      shopIds,
+      swipperPhoto: swipperPhotos,
+    });
     await newCity.save();
     res.status(201).json(newCity);
   } catch (error) {
@@ -37,10 +43,15 @@ export const getCityById = async (req, res) => {
 
 // Update a city by ID
 export const updateCityById = async (req, res) => {
+  const swipperPhotos = req.files.map((file) => file.path);
   try {
-    const updatedCity = await City.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    const updatedCity = await City.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body, swipperPhoto: swipperPhotos },
+      {
+        new: true,
+      }
+    );
     if (!updatedCity) {
       return res.status(404).json({ error: "City not found" });
     }

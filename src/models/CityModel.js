@@ -2,13 +2,23 @@ import mongoose from "mongoose";
 
 // Define the schema
 const citySchema = new mongoose.Schema({
-  cityUid: { type: String, required: false },
+  cityName: { type: String, required: true },
   location: {
     lattitude: { type: String, required: false },
     longitude: { type: String, required: false },
   },
-  //   shopsUid: { type: [String], required: false },
-  //   swiperPhoto: { type: [String], required: false },
+  shopIds: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Shop",
+    },
+  ],
+  swipperPhoto: [
+    {
+      type: String,
+      required: false,
+    },
+  ],
 });
 
 // Create the model
