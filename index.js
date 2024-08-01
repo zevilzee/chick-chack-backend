@@ -32,6 +32,6 @@ app.use("/appointment", AppointmentRouter);
 app.use("/shop", ShopRouter);
 app.use("/transporter", TrnasportRoutes);
 app.use("/AdditionItems", AdditionItemRoutes);
-app.listen(85, () => {
+app.listen(3000, () => {
   console.log("Server is running");
 });
