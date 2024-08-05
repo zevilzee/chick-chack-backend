@@ -1,5 +1,5 @@
 import UserModel from "../models/userModel.js";
-
+import jwt from "jsonwebtoken";
 // Create a new user
 export const createUser = async (req, res) => {
   try {

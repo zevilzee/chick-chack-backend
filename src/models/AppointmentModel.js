@@ -4,11 +4,11 @@ import mongoose from "mongoose";
 const appointmentSchema = new mongoose.Schema({
   appointmentDate: {
     type: String,
-    required: true,
+    required: false,
   },
   appointmentDateTime: {
     type: Date,
-    required: true,
+    required: false,
   },
   appointmentPrice: {
     type: String,
@@ -16,26 +16,26 @@ const appointmentSchema = new mongoose.Schema({
   },
   appointmentTime: {
     type: String,
-    required: true,
+    required: false,
   },
   appointmentType: {
     type: String,
     required: false,
   },
-  clientName: { type: String, required: true },
+  clientName: { type: String, required: false },
   clientPhoneNumber: {
     type: String,
-    required: true,
+    required: false,
   },
   shopId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Shop",
-    required: true,
+    required: false,
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
-    required: true,
+    required: false,
   },
 });
 

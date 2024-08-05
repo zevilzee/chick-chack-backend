@@ -4,7 +4,7 @@ import City from "../models/CityModel.js";
 export const createCity = async (req, res) => {
   try {
     const { cityName, location, shopIds } = req.body;
-    const swipperPhotos = req.files.map((file) => file.path);
+    const swipperPhotos = req.files?.map((file) => file.path);
     const newCity = new City({
       cityName,
       location,
@@ -43,8 +43,8 @@ export const getCityById = async (req, res) => {
 
 // Update a city by ID
 export const updateCityById = async (req, res) => {
-  const swipperPhotos = req.files.map((file) => file.path);
   try {
+    const swipperPhotos = req.files?.map((file) => file.path);
     const updatedCity = await City.findByIdAndUpdate(
       req.params.id,
       { ...req.body, swipperPhoto: swipperPhotos },

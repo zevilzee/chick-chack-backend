@@ -5,12 +5,21 @@ export const createCategory = async (req, res) => {
   try {
     const { categoryName } = req.body;
     categoryPhoto = req?.file?.path;
-    const newCategory = new Category({
-      categoryName,
-      categoryPhoto,
-    });
-    await newCategory.save();
-    res.status(201).json(newCategory);
+    if (categoryPhoto === undefined) {
+      const newCategory = new Category({
+        categoryName,
+      });
+
+      await newCategory.save();
+      res.status(201).json(newCategory);
+    } else {
+      const newCategory = new Category({
+        categoryName,
+        categoryPhoto,
+      });
+      await newCategory.save();
+      res.status(201).json(newCategory);
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
