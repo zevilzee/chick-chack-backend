@@ -6,11 +6,11 @@ const itemSchema = new mongoose.Schema({
     { type: mongoose.Schema.Types.ObjectId, ref: "AdditionalItem" },
   ],
   itemAvailability: { type: Boolean, required: false },
-  itemCategory: { type: String, required: false },
+  itemCategory: { type: String, required: true },
   itemDescription: { type: String, required: false },
-  itemName: { type: String, required: false },
-  itemPhoto: { type: String, required: false },
-  itemPrice: { type: String, required: false },
+  itemName: { type: String, required: true },
+  itemPhoto: { type: String, required: true },
+  itemPrice: { type: String, required: true },
 });
 
 // Create the model

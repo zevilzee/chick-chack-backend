@@ -6,7 +6,7 @@ export const createItem = async (req, res) => {
     const path = req?.file?.path;
     const newItem = new Item({
       ...req.body,
-      itemPhoto: path,
+      additionPhoto: path,
     });
     await newItem.save();
     res.status(201).json(newItem);
@@ -44,7 +44,7 @@ export const updateItemById = async (req, res) => {
     const path = req?.file?.path;
     const updatedItem = await Item.findByIdAndUpdate(
       req.params.id,
-      { ...req.body, itemPhoto: path },
+      { ...req.body, additionPhoto: path },
       {
         new: true,
       }

@@ -4,11 +4,11 @@ import mongoose from "mongoose";
 const shopSchema = new mongoose.Schema({
   Tel: {
     type: String,
-    required: false,
+    required: true,
   },
   address: {
     type: String,
-    required: false,
+    required: true,
   },
   appointmentDuration: {
     type: String,
@@ -24,23 +24,23 @@ const shopSchema = new mongoose.Schema({
   city: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "City",
-    required: false,
+    required: true,
   },
   headerBackground: {
     type: String,
-    required: false,
+    required: true,
   },
   icon: {
     type: String,
-    required: false,
+    required: true,
   },
   isTemporaryClose: {
     type: Boolean,
-    required: false,
+    required: true,
   },
   location: {
-    lattitude: { type: String, required: false },
-    longitude: { type: String, required: false },
+    lattitude: { type: String, required: true },
+    longitude: { type: String, required: true },
   },
   menu: [
     {
@@ -51,20 +51,20 @@ const shopSchema = new mongoose.Schema({
   ],
   name: {
     type: String,
-    required: false,
+    required: true,
   },
   preparationTime: {
     type: String,
-    required: false,
+    required: true,
   },
   route: {
     type: String,
-    required: false,
+    required: true,
   },
   shopCategory: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category",
-    required: false,
+    required: true,
   },
   orders: [
     { type: mongoose.Schema.Types.ObjectId, ref: "order", required: false },
@@ -72,24 +72,24 @@ const shopSchema = new mongoose.Schema({
   ownerId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
-    required: false,
+    required: true,
   },
   shopType: {
     type: String,
-    required: false,
+    required: true,
   },
   OrderType: [
     {
       type: String,
-      required: false,
+      required: true,
     },
   ],
   workingHours: [
     {
-      end: { type: String, required: false },
-      start: { type: String, required: false },
-      isOpen: { type: String, required: false },
-      name: { type: String, required: false },
+      end: { type: String, required: true },
+      start: { type: String, required: true },
+      isOpen: { type: String, required: true },
+      name: { type: String, required: true },
     },
   ],
 });

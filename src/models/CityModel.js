@@ -4,8 +4,8 @@ import mongoose from "mongoose";
 const citySchema = new mongoose.Schema({
   cityName: { type: String, required: true },
   location: {
-    lattitude: { type: String, required: false },
-    longitude: { type: String, required: false },
+    lattitude: { type: String, required: true },
+    longitude: { type: String, required: true },
   },
   shopIds: [
     {
