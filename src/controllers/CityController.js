@@ -7,7 +7,7 @@ export const createCity = async (req, res) => {
     const swipperPhotos = req.files?.map((file) => file.path);
     const newCity = new City({
       cityName,
-      location,
+      location: location ? JSON.parse(location) : null,
       shopIds,
       swipperPhoto: swipperPhotos,
     });
@@ -47,7 +47,11 @@ export const updateCityById = async (req, res) => {
     const swipperPhotos = req.files?.map((file) => file.path);
     const updatedCity = await City.findByIdAndUpdate(
       req.params.id,
-      { ...req.body, swipperPhoto: swipperPhotos },
+      {
+        ...req.body,
+        swipperPhoto: swipperPhotos,
+        location: location && JSON.parse(location),
+      },
       {
         new: true,
       }

@@ -11,6 +11,15 @@ export const createShop = async (req, res) => {
       ...req.body,
       headerBackground: headerBackground.path,
       icon: icon.path,
+      appointments: req.body.appointments
+        ? JSON.parse(req.body.appointments)
+        : [],
+      menu: req.body.menu ? JSON.parse(req.body.menu) : [],
+      location: req.body.location ? JSON.parse(req.body.location) : null,
+      OrderType: req.body.OrderType ? JSON.parse(req.body.OrderType) : [],
+      workingHours: req.body.workingHours
+        ? JSON.parse(req.body.workingHours)
+        : [],
     });
 
     await newShop.save();
@@ -64,7 +73,20 @@ export const updateShopById = async (req, res) => {
   try {
     const updatedShop = await Shop.findByIdAndUpdate(
       req.params.id,
-      { ...req.body, headerBackground: headerBackground.path, icon: icon.path },
+      {
+        ...req.body,
+        headerBackground: headerBackground.path,
+        icon: icon.path,
+        appointments: req.body.appointments
+          ? JSON.parse(req.body.appointments)
+          : [],
+        menu: req.body.menu ? JSON.parse(req.body.menu) : [],
+        location: req.body.location ? JSON.parse(req.body.location) : null,
+        OrderType: req.body.OrderType ? JSON.parse(req.body.OrderType) : [],
+        workingHours: req.body.workingHours
+          ? JSON.parse(req.body.workingHours)
+          : [],
+      },
       {
         new: true,
       }

@@ -4,7 +4,7 @@ import Category from "../models/ShopCategory.js";
 export const createCategory = async (req, res) => {
   try {
     const { categoryName } = req.body;
-    categoryPhoto = req?.file?.path;
+    const categoryPhoto = req?.file?.path;
     if (categoryPhoto === undefined) {
       const newCategory = new Category({
         categoryName,
@@ -51,7 +51,7 @@ export const getCategoryById = async (req, res) => {
 // Update a category by ID
 export const updateCategoryById = async (req, res) => {
   try {
-    categoryPhoto = req?.file?.path;
+    const categoryPhoto = req?.file?.path;
     const updatedCategory = await Category.findByIdAndUpdate(
       req.params.id,
       { ...req.body, categoryPhoto },

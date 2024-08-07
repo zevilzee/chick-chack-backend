@@ -10,7 +10,7 @@ const itemSchema = new mongoose.Schema({
   itemDescription: { type: String, required: false },
   itemName: { type: String, required: false },
   itemPhoto: { type: String, required: false },
-  itemPrice: { type: Number, required: false },
+  itemPrice: { type: String, required: false },
 });
 
 // Create the model

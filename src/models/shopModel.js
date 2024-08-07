@@ -39,8 +39,8 @@ const shopSchema = new mongoose.Schema({
     required: false,
   },
   location: {
-    lattitude: { type: String, required: true },
-    longitude: { type: String, required: true },
+    lattitude: { type: String, required: false },
+    longitude: { type: String, required: false },
   },
   menu: [
     {
@@ -65,10 +65,6 @@ const shopSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category",
     required: false,
-  },
-  shopLocation: {
-    latitude: { type: String, required: false },
-    longitude: { type: String, required: false },
   },
   orders: [
     { type: mongoose.Schema.Types.ObjectId, ref: "order", required: false },
