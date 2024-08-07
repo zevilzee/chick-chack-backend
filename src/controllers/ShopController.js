@@ -1,5 +1,5 @@
 import Shop from "../models/shopModel.js";
-
+import order from "../models/OrderMode.js";
 // Create a new shop
 export const createShop = async (req, res) => {
   try {
