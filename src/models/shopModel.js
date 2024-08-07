@@ -39,7 +39,7 @@ const shopSchema = new mongoose.Schema({
     required: true,
   },
   location: {
-    lattitude: { type: String, required: true },
+    latitude: { type: String, required: true },
     longitude: { type: String, required: true },
   },
   menu: [
