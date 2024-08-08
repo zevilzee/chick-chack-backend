@@ -6,6 +6,7 @@ const additionSchema = new mongoose.Schema({
   additionName: { type: String, required: true },
   additionPhoto: { type: String, required: true },
   additionPrice: { type: String, required: true },
+  additionType: { type: String, required: true },
 });
 const AdditionalItem = mongoose.model("AdditionalItem", additionSchema);
 
