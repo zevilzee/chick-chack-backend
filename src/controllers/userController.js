@@ -1,17 +1,23 @@
 import UserModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
+
 // Create a new user
 export const createUser = async (req, res) => {
   try {
     const profile = req?.file;
     const newUser = new UserModel({ ...req.body, profile: profile?.path });
     await newUser.save();
-    const token = jwt.sign({ _id: User.id }, process.env.TOKEN_SECRET);
-    res.header("auth_token", token).send(User).status(201);
+    
+    // Correct the typo here
+    const token = jwt.sign({ _id: newUser._id }, process.env.TOKEN_SECRET);
+    
+    // Send the newUser object in the response
+    res.header("auth_token", token).status(201).json(newUser);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 // Get all users
 export const getAllUsers = async (req, res) => {
