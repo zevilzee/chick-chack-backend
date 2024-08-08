@@ -4,8 +4,16 @@ import Item from "../models/ShopItemModel.js";
 export const createItem = async (req, res) => {
   try {
     const path = req?.file?.path;
+
+    // Parse itemAdditions if it's coming as a string
+    let itemAdditions = req.body.itemAdditions;
+    if (typeof itemAdditions === 'string') {
+      itemAdditions = JSON.parse(itemAdditions);
+    }
+
     const newItem = new Item({
       ...req.body,
+      itemAdditions, // ensure this is an array of ObjectIds
       itemPhoto: path,
     });
     await newItem.save();
@@ -14,6 +22,7 @@ export const createItem = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 // Get all items
 export const getAllItems = async (req, res) => {
