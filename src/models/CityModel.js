@@ -7,12 +7,6 @@ const citySchema = new mongoose.Schema({
     latitude: { type: String, required: true },
     longitude: { type: String, required: true },
   },
-  shopIds: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Shop",
-    },
-  ],
   swipperPhoto: [
     {
       type: String,

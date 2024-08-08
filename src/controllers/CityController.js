@@ -3,12 +3,11 @@ import City from "../models/CityModel.js";
 // Create a new city
 export const createCity = async (req, res) => {
   try {
-    const { cityName, location, shopIds } = req.body;
+    const { cityName, location } = req.body;
     const swipperPhotos = req.files?.map((file) => file.path);
     const newCity = new City({
       cityName,
       location: location && JSON.parse(location),
-      shopIds,
       swipperPhoto: swipperPhotos,
     });
     await newCity.save();
