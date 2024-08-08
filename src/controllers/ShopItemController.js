@@ -1,5 +1,7 @@
 import Item from "../models/ShopItemModel.js";
 
+import mongoose from "mongoose";
+
 // Create a new item
 export const createItem = async (req, res) => {
   try {
@@ -51,6 +53,17 @@ export const getItemById = async (req, res) => {
 export const updateItemById = async (req, res) => {
   try {
     const path = req?.file?.path;
+
+    // Ensure itemAdditions is an array of ObjectIds
+    if (req.body.itemAdditions) {
+      if (typeof req.body.itemAdditions === 'string') {
+        req.body.itemAdditions = JSON.parse(req.body.itemAdditions);
+      }
+      req.body.itemAdditions = req.body.itemAdditions.map(
+        (id) => mongoose.Types.ObjectId(id)
+      );
+    }
+
     const updatedItem = await Item.findByIdAndUpdate(
       req.params.id,
       { ...req.body, itemPhoto: path },
@@ -58,14 +71,17 @@ export const updateItemById = async (req, res) => {
         new: true,
       }
     );
+
     if (!updatedItem) {
       return res.status(404).json({ error: "Item not found" });
     }
+
     res.status(200).json(updatedItem);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 // Delete an item by ID
 export const deleteItemById = async (req, res) => {
