@@ -43,13 +43,11 @@ export const getCityById = async (req, res) => {
 // Update a city by ID
 export const updateCityById = async (req, res) => {
   try {
-    const { location, ...otherBodyFields } = req.body;
     const swipperPhotos = req.files?.map((file) => file.path);
-
     const updatedCity = await City.findByIdAndUpdate(
       req.params.id,
       {
-        ...otherBodyFields,
+        ...req.body,
         swipperPhoto: swipperPhotos,
         location: location && JSON.parse(location),
       },
@@ -57,11 +55,9 @@ export const updateCityById = async (req, res) => {
         new: true,
       }
     );
-
     if (!updatedCity) {
       return res.status(404).json({ error: "City not found" });
     }
-
     res.status(200).json(updatedCity);
   } catch (error) {
     res.status(400).json({ error: error.message });
