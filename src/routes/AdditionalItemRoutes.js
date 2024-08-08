@@ -5,7 +5,7 @@ import {
   getItemById,
   updateItemById,
   deleteItemById,
-} from "../controllers/ShopItemController.js";
+} from "../controllers/AdditionalItemController.js";
 import authMiddleware from "../middlewares/JwtAuth.js";
 import upload from "../middlewares/upload.js";
 
