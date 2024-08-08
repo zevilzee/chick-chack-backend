@@ -25,7 +25,6 @@ export const createItem = async (req, res) => {
   }
 };
 
-
 // Get all items
 export const getAllItems = async (req, res) => {
   try {
@@ -60,7 +59,7 @@ export const updateItemById = async (req, res) => {
         req.body.itemAdditions = JSON.parse(req.body.itemAdditions);
       }
       req.body.itemAdditions = req.body.itemAdditions.map(
-        (id) => mongoose.Types.ObjectId(id)
+        (id) => new mongoose.Types.ObjectId(id)
       );
     }
 
@@ -81,7 +80,6 @@ export const updateItemById = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-
 
 // Delete an item by ID
 export const deleteItemById = async (req, res) => {
