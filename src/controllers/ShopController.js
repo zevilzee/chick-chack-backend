@@ -115,7 +115,7 @@ export const deleteShopById = async (req, res) => {
 
 export const getShopByOwnerId = async (req, res) => {
   try {
-    const shop = await Shop.findOne({ ownerId: req.params.ownerId });
+    const shop = await Shop.find({ ownerId: req.params.id });
     if (!shop) {
       return res.status(404).json({ error: "Shop not found" });
     }
@@ -127,7 +127,7 @@ export const getShopByOwnerId = async (req, res) => {
 
 export const getShopByCity = async (req, res) => {
   try {
-    const shop = await Shop.find({ city: req.params.city });
+    const shop = await Shop.find({ city: req.params.id });
     if (!shop) {
       return res.status(404).json({ error: "Shop not found" });
     }
@@ -139,7 +139,7 @@ export const getShopByCity = async (req, res) => {
 
 export const getShopByCategory = async (req, res) => {
   try {
-    const shop = await Shop.find({ shopCategory: req.params.city });
+    const shop = await Shop.find({ shopCategory: req.params.id });
     if (!shop) {
       return res.status(404).json({ error: "Shop not found" });
     }
