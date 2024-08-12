@@ -1,6 +1,5 @@
 import Shop from "../models/shopModel.js";
 import order from "../models/OrderMode.js";
-
 // Create a new shop
 export const createShop = async (req, res) => {
   try {
@@ -8,32 +7,15 @@ export const createShop = async (req, res) => {
       ? req.files["headerBackground"][0]
       : null;
     const icon = req.files["icon"] ? req.files["icon"][0] : null;
-
-    // Debugging log
-    console.log("Raw request body:", req.body);
-
-    // Parse the location field
-    const location = req.body.location ? JSON.parse(req.body.location) : null;
-
-    // More Debugging logs
-    console.log("Raw location:", req.body.location);
-    console.log("Parsed location:", location);
-
-    // Validate that both latitude and longitude are present
-    if (!location || !location.latitude || !location.longitude) {
-      console.error("Missing latitude or longitude");
-      return res.status(400).json({ error: "Location with latitude and longitude is required." });
-    }
-
     const newShop = new Shop({
       ...req.body,
-      headerBackground: headerBackground?.path,
-      icon: icon?.path,
+      headerBackground: headerBackground.path,
+      icon: icon.path,
       appointments: req.body.appointments
         ? JSON.parse(req.body.appointments)
         : [],
       menu: req.body.menu ? JSON.parse(req.body.menu) : [],
-      location,  // Assign parsed location
+      location: req.body.location ? JSON.parse(req.body.location) : null,
       OrderType: req.body.OrderType ? JSON.parse(req.body.OrderType) : [],
       workingHours: req.body.workingHours
         ? JSON.parse(req.body.workingHours)
@@ -43,7 +25,6 @@ export const createShop = async (req, res) => {
     await newShop.save();
     res.status(201).json(newShop);
   } catch (error) {
-    console.error("Error creating shop:", error.message);
     res.status(400).json({ error: error.message });
   }
 };
