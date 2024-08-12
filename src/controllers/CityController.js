@@ -44,12 +44,15 @@ export const getCityById = async (req, res) => {
 export const updateCityById = async (req, res) => {
   try {
     const swipperPhotos = req.files?.map((file) => file.path);
+    const city = await City.findById(req.params.id);
     const updatedCity = await City.findByIdAndUpdate(
       req.params.id,
       {
         ...req.body,
         swipperPhoto: swipperPhotos,
-        location: location && JSON.parse(location),
+        location: req?.body?.location
+          ? JSON.parse(req?.body?.location)
+          : city?.location,
       },
       {
         new: true,

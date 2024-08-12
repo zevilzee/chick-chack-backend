@@ -14,7 +14,7 @@ const router = express.Router();
 router.post("/cities", upload.array("swipperPhoto", 3), createCity);
 router.get("/cities", getAllCities);
 router.get("/cities/:id", getCityById);
-router.put("/cities/:id", updateCityById);
+router.put("/cities/:id", upload.array("swipperPhoto", 3), updateCityById);
 router.delete("/cities/:id", deleteCityById);
 
 export default router;
