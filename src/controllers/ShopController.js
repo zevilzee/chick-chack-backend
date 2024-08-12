@@ -1,5 +1,6 @@
 import Shop from "../models/shopModel.js";
 import order from "../models/OrderMode.js";
+
 // Create a new shop
 export const createShop = async (req, res) => {
   try {
@@ -9,16 +10,18 @@ export const createShop = async (req, res) => {
     const icon = req.files["icon"] ? req.files["icon"][0] : null;
 
     // Debugging log
-    console.log("Raw location from body:", req.body.location);
+    console.log("Raw request body:", req.body);
 
     // Parse the location field
     const location = req.body.location ? JSON.parse(req.body.location) : null;
 
-    // Debugging log
+    // More Debugging logs
+    console.log("Raw location:", req.body.location);
     console.log("Parsed location:", location);
 
     // Validate that both latitude and longitude are present
     if (!location || !location.latitude || !location.longitude) {
+      console.error("Missing latitude or longitude");
       return res.status(400).json({ error: "Location with latitude and longitude is required." });
     }
 
@@ -40,7 +43,7 @@ export const createShop = async (req, res) => {
     await newShop.save();
     res.status(201).json(newShop);
   } catch (error) {
-    console.error(error);  // Log the error for debugging
+    console.error("Error creating shop:", error.message);
     res.status(400).json({ error: error.message });
   }
 };
