@@ -7,15 +7,24 @@ export const createShop = async (req, res) => {
       ? req.files["headerBackground"][0]
       : null;
     const icon = req.files["icon"] ? req.files["icon"][0] : null;
+
+    // Parse the location field
+    const location = req.body.location ? JSON.parse(req.body.location) : null;
+
+    // Validate that both latitude and longitude are present
+    if (!location || !location.latitude || !location.longitude) {
+      return res.status(400).json({ error: "Location with latitude and longitude is required." });
+    }
+
     const newShop = new Shop({
       ...req.body,
-      headerBackground: headerBackground.path,
-      icon: icon.path,
+      headerBackground: headerBackground?.path,
+      icon: icon?.path,
       appointments: req.body.appointments
         ? JSON.parse(req.body.appointments)
         : [],
       menu: req.body.menu ? JSON.parse(req.body.menu) : [],
-      location: req.body.location ? JSON.parse(req.body.location) : null,
+      location,  // Assign parsed location
       OrderType: req.body.OrderType ? JSON.parse(req.body.OrderType) : [],
       workingHours: req.body.workingHours
         ? JSON.parse(req.body.workingHours)
@@ -28,6 +37,7 @@ export const createShop = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 // Get all shops
 export const getAllShops = async (req, res) => {
