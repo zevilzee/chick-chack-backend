@@ -11,15 +11,15 @@ import upload from "../middlewares/upload.js";
 
 const router = express.Router();
 
-router.post("/items", upload.single("itemPhoto"), createItem);
-router.get("/items", getAllItems);
-router.get("/items/:id", getItemById);
+router.post("/items", authMiddleware, upload.single("itemPhoto"), createItem);
+router.get("/items", authMiddleware, getAllItems);
+router.get("/items/:id", authMiddleware, getItemById);
 router.put(
   "/items/:id",
-
+  authMiddleware,
   upload.single("itemPhoto"),
   updateItemById
 );
-router.delete("/items/:id", deleteItemById);
+router.delete("/items/:id", authMiddleware, deleteItemById);
 
 export default router;

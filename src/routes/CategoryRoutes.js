@@ -13,18 +13,18 @@ const router = express.Router();
 
 router.post(
   "/categories",
-
+  authMiddleware,
   upload.single("categoryPhoto"),
   createCategory
 );
-router.get("/categories", getAllCategories);
-router.get("/categories/:id", getCategoryById);
+router.get("/categories", authMiddleware, getAllCategories);
+router.get("/categories/:id", authMiddleware, getCategoryById);
 router.put(
   "/categories/:id",
-
+  authMiddleware,
   upload.single("categoryPhoto"),
   updateCategoryById
 );
-router.delete("/categories/:id", deleteCategoryById);
+router.delete("/categories/:id", authMiddleware, deleteCategoryById);
 
 export default router;

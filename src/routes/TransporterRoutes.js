@@ -10,10 +10,10 @@ import authMiddleware from "../middlewares/JwtAuth.js";
 
 const router = express.Router();
 
-router.post("/transporters", createTransporter);
-router.get("/transporters", getAllTransporters);
-router.get("/transporters/:id", getTransporterById);
-router.put("/transporters/:id", updateTransporterById);
-router.delete("/transporters/:id", deleteTransporterById);
+router.post("/transporters", authMiddleware, createTransporter);
+router.get("/transporters", authMiddleware, getAllTransporters);
+router.get("/transporters/:id", authMiddleware, getTransporterById);
+router.put("/transporters/:id", authMiddleware, updateTransporterById);
+router.delete("/transporters/:id", authMiddleware, deleteTransporterById);
 
 export default router;
