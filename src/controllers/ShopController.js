@@ -8,8 +8,14 @@ export const createShop = async (req, res) => {
       : null;
     const icon = req.files["icon"] ? req.files["icon"][0] : null;
 
+    // Debugging log
+    console.log("Raw location from body:", req.body.location);
+
     // Parse the location field
     const location = req.body.location ? JSON.parse(req.body.location) : null;
+
+    // Debugging log
+    console.log("Parsed location:", location);
 
     // Validate that both latitude and longitude are present
     if (!location || !location.latitude || !location.longitude) {
@@ -34,10 +40,10 @@ export const createShop = async (req, res) => {
     await newShop.save();
     res.status(201).json(newShop);
   } catch (error) {
+    console.error(error);  // Log the error for debugging
     res.status(400).json({ error: error.message });
   }
 };
-
 
 // Get all shops
 export const getAllShops = async (req, res) => {
