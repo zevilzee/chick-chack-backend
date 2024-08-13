@@ -9,11 +9,10 @@ export const createUser = async (req, res) => {
     const newUser = new UserModel({ ...req.body, profile: profile?.path });
     await newUser.save();
     const token = jwt.sign({ _id: newUser._id }, process.env.TOKEN_SECRET);
-    const otpCode = await sendOTP(newUser.phone);
     res
       .header("auth_token", token)
       .status(201)
-      .json({ user: newUser, token: token, otpCode: otpCode });
+      .json({ user: newUser, token: token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
