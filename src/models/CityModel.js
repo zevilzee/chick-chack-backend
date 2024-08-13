@@ -7,7 +7,7 @@ const citySchema = new mongoose.Schema({
     latitude: { type: String, required: true },
     longitude: { type: String, required: true },
   },
-  swipperPhoto: [
+  swiperPhoto: [
     {
       type: String,
       required: false,

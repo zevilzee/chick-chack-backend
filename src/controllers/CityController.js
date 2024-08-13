@@ -5,7 +5,7 @@ export const createCity = async (req, res) => {
   try {
     const { cityName, location } = req.body;
     const baseURL = "http://13.48.24.117:3000"; // Your server's base URL
-    const swipperPhotos = req.files?.map((file) => {
+    const swiperPhotos = req.files?.map((file) => {
       const filePath = file.path.replace("uploads", "images"); // Adjust path if necessary
       return `${baseURL}/${filePath}`;
     });
@@ -13,7 +13,7 @@ export const createCity = async (req, res) => {
     const newCity = new City({
       cityName,
       location: location && JSON.parse(location),
-      swipperPhoto: swipperPhotos,
+      swiperPhoto: swiperPhotos,
     });
 
     await newCity.save();
@@ -50,7 +50,7 @@ export const getCityById = async (req, res) => {
 export const updateCityById = async (req, res) => {
   try {
     const baseURL = "http://13.48.24.117:3000"; // Your server's base URL
-    const swipperPhotos = req.files?.map((file) => {
+    const swiperPhotos = req.files?.map((file) => {
       const filePath = file.path.replace("uploads", "images"); // Adjust path if necessary
       return `${baseURL}/${filePath}`;
     });
@@ -60,7 +60,7 @@ export const updateCityById = async (req, res) => {
       req.params.id,
       {
         ...req.body,
-        swipperPhoto: swipperPhotos,
+        swiperPhoto: swiperPhotos,
         location: req?.body?.location
           ? JSON.parse(req?.body?.location)
           : city?.location,
