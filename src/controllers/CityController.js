@@ -4,12 +4,18 @@ import City from "../models/CityModel.js";
 export const createCity = async (req, res) => {
   try {
     const { cityName, location } = req.body;
-    const swipperPhotos = req.files?.map((file) => file.path);
+    const baseURL = "http://13.48.24.117:3000"; // Your server's base URL
+    const swipperPhotos = req.files?.map((file) => {
+      const filePath = file.path.replace("uploads", "images"); // Adjust path if necessary
+      return `${baseURL}/${filePath}`;
+    });
+
     const newCity = new City({
       cityName,
       location: location && JSON.parse(location),
       swipperPhoto: swipperPhotos,
     });
+
     await newCity.save();
     res.status(201).json(newCity);
   } catch (error) {
@@ -43,7 +49,12 @@ export const getCityById = async (req, res) => {
 // Update a city by ID
 export const updateCityById = async (req, res) => {
   try {
-    const swipperPhotos = req.files?.map((file) => file.path);
+    const baseURL = "http://13.48.24.117:3000"; // Your server's base URL
+    const swipperPhotos = req.files?.map((file) => {
+      const filePath = file.path.replace("uploads", "images"); // Adjust path if necessary
+      return `${baseURL}/${filePath}`;
+    });
+
     const city = await City.findById(req.params.id);
     const updatedCity = await City.findByIdAndUpdate(
       req.params.id,
@@ -54,10 +65,9 @@ export const updateCityById = async (req, res) => {
           ? JSON.parse(req?.body?.location)
           : city?.location,
       },
-      {
-        new: true,
-      }
+      { new: true }
     );
+
     if (!updatedCity) {
       return res.status(404).json({ error: "City not found" });
     }
