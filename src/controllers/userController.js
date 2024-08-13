@@ -1,5 +1,6 @@
 import UserModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
+import { sendOTP } from "../utils/sendOtp.js";
 
 // Create a new user
 export const createUser = async (req, res) => {
@@ -7,17 +8,16 @@ export const createUser = async (req, res) => {
     const profile = req?.file;
     const newUser = new UserModel({ ...req.body, profile: profile?.path });
     await newUser.save();
-    
-    // Correct the typo here
     const token = jwt.sign({ _id: newUser._id }, process.env.TOKEN_SECRET);
-    
-    // Send the newUser object in the response
-    res.header("auth_token", token).status(201).json(newUser);
+    const otpCode = await sendOTP(user.phone);
+    res
+      .header("auth_token", token)
+      .status(201)
+      .json({ user: newUser, token: token, otpCode: otpCode });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
-
 
 // Get all users
 export const getAllUsers = async (req, res) => {
@@ -78,12 +78,14 @@ export const signin = async (req, res) => {
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email: email });
     if (user) {
-      if (user.password === password) {
-        const token = jwt.sign({ _id: user.id }, process.env.TOKEN_SECRET);
-        res.header("auth_token", token).send(user).status(200);
-      } else {
-        res.status(400).json({ error: "Invalid password" });
-      }
+      const otpCode = await sendOTP(user.phone);
+      const token = jwt.sign({ _id: user.id }, process.env.TOKEN_SECRET);
+      res
+        .header("auth_token", token)
+        .send({ user: user, token: token, otpCode: otpCode })
+        .status(200);
+    } else {
+      res.status(400).json({ error: "Invalid password" });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
