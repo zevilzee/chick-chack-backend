@@ -154,3 +154,22 @@ export const getShopByCategory = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+// Get menu items by shop ID
+export const getShopMenuByShopId = async (req, res) => {
+  try {
+    // Get the shop by ID
+    const shop = await Shop.findById(req.params.id).populate("menu");
+    
+    if (!shop) {
+      return res.status(404).json({ error: "Shop not found" });
+    }
+
+    // Get the menu items using the menu array from the shop document
+    const menuItems = await Item.find({ _id: { $in: shop.menu } });
+
+    res.status(200).json(menuItems);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
