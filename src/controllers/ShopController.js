@@ -1,4 +1,5 @@
 import Shop from "../models/shopModel.js";
+import Item from "../models/ShopItemModel.js";
 import order from "../models/OrderMode.js";
 
 // Create a new shop
