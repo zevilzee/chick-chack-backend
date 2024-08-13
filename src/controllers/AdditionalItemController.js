@@ -3,17 +3,22 @@ import Item from "../models/AdditionalItems.js";
 // Create a new item
 export const createItem = async (req, res) => {
   try {
-    const path = req?.file?.path;
+    const baseURL = "http://13.48.24.117:3000"; // Your server's base URL
+    const filePath = req?.file?.path;
+    const additionPhoto = filePath ? `${baseURL}/${filePath.replace("uploads", "images")}` : null;
+
     const newItem = new Item({
       ...req.body,
-      additionPhoto: path,
+      additionPhoto,
     });
+
     await newItem.save();
     res.status(201).json(newItem);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 // Get all items
 export const getAllItems = async (req, res) => {
@@ -41,14 +46,16 @@ export const getItemById = async (req, res) => {
 // Update an item by ID
 export const updateItemById = async (req, res) => {
   try {
-    const path = req?.file?.path;
+    const baseURL = "http://13.48.24.117:3000"; // Your server's base URL
+    const filePath = req?.file?.path;
+    const additionPhoto = filePath ? `${baseURL}/${filePath.replace("uploads", "images")}` : undefined;
+
     const updatedItem = await Item.findByIdAndUpdate(
       req.params.id,
-      { ...req.body, additionPhoto: path },
-      {
-        new: true,
-      }
+      { ...req.body, additionPhoto },
+      { new: true }
     );
+
     if (!updatedItem) {
       return res.status(404).json({ error: "Item not found" });
     }
@@ -57,6 +64,7 @@ export const updateItemById = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 // Delete an item by ID
 export const deleteItemById = async (req, res) => {

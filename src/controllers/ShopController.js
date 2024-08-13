@@ -1,25 +1,28 @@
 import Shop from "../models/shopModel.js";
 import order from "../models/OrderMode.js";
+
 // Create a new shop
 export const createShop = async (req, res) => {
   try {
+    const baseURL = "http://13.48.24.117:3000"; // Your server's base URL
     const headerBackground = req.files["headerBackground"]
-      ? req.files["headerBackground"][0]
+      ? req.files["headerBackground"][0].path
       : null;
-    const icon = req.files["icon"] ? req.files["icon"][0] : null;
+    const icon = req.files["icon"] ? req.files["icon"][0].path : null;
+
+    // Convert file paths to full URLs
+    const headerBackgroundUrl = headerBackground ? `${baseURL}/${headerBackground.replace("uploads", "images")}` : null;
+    const iconUrl = icon ? `${baseURL}/${icon.replace("uploads", "images")}` : null;
+
     const newShop = new Shop({
       ...req.body,
-      headerBackground: headerBackground.path,
-      icon: icon.path,
-      appointments: req.body.appointments
-        ? JSON.parse(req.body.appointments)
-        : [],
+      headerBackground: headerBackgroundUrl,
+      icon: iconUrl,
+      appointments: req.body.appointments ? JSON.parse(req.body.appointments) : [],
       menu: req.body.menu ? JSON.parse(req.body.menu) : [],
       location: req.body.location ? JSON.parse(req.body.location) : null,
       OrderType: req.body.OrderType ? JSON.parse(req.body.OrderType) : [],
-      workingHours: req.body.workingHours
-        ? JSON.parse(req.body.workingHours)
-        : [],
+      workingHours: req.body.workingHours ? JSON.parse(req.body.workingHours) : [],
     });
 
     await newShop.save();
@@ -28,6 +31,7 @@ export const createShop = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 // Get all shops
 export const getAllShops = async (req, res) => {
@@ -66,34 +70,36 @@ export const getShopById = async (req, res) => {
 
 // Update a shop by ID
 export const updateShopById = async (req, res) => {
+  const baseURL = "http://13.48.24.117:3000"; // Your server's base URL
   const headerBackground = req.files["headerBackground"]
-    ? req.files["headerBackground"][0]
+    ? req.files["headerBackground"][0].path
     : null;
-  const icon = req.files["icon"] ? req.files["icon"][0] : null;
+  const icon = req.files["icon"] ? req.files["icon"][0].path : null;
+
   try {
+    // Convert file paths to full URLs
+    const headerBackgroundUrl = headerBackground ? `${baseURL}/${headerBackground.replace("uploads", "images")}` : undefined;
+    const iconUrl = icon ? `${baseURL}/${icon.replace("uploads", "images")}` : undefined;
+
     const updatedShop = await Shop.findByIdAndUpdate(
       req.params.id,
       {
         ...req.body,
-        headerBackground: headerBackground.path,
-        icon: icon.path,
-        appointments: req.body.appointments
-          ? JSON.parse(req.body.appointments)
-          : [],
+        headerBackground: headerBackgroundUrl,
+        icon: iconUrl,
+        appointments: req.body.appointments ? JSON.parse(req.body.appointments) : [],
         menu: req.body.menu ? JSON.parse(req.body.menu) : [],
         location: req.body.location ? JSON.parse(req.body.location) : null,
         OrderType: req.body.OrderType ? JSON.parse(req.body.OrderType) : [],
-        workingHours: req.body.workingHours
-          ? JSON.parse(req.body.workingHours)
-          : [],
+        workingHours: req.body.workingHours ? JSON.parse(req.body.workingHours) : [],
       },
-      {
-        new: true,
-      }
+      { new: true }
     );
+
     if (!updatedShop) {
       return res.status(404).json({ error: "Shop not found" });
     }
+
     res.status(200).json(updatedShop);
   } catch (error) {
     res.status(400).json({ error: error.message });
