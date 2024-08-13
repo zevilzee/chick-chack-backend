@@ -75,8 +75,8 @@ export const deleteUserById = async (req, res) => {
 
 export const signin = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await UserModel.findOne({ email: email });
+    const { phone } = req.body;
+    const user = await UserModel.findOne({ phone: phone });
     if (user) {
       const otpCode = await sendOTP(user.phone);
       const token = jwt.sign({ _id: user.id }, process.env.TOKEN_SECRET);
