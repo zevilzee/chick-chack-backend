@@ -11,20 +11,10 @@ import upload from "../middlewares/upload.js";
 
 const router = express.Router();
 
-router.post(
-  "/cities",
-  authMiddleware,
-  upload.array("swipperPhoto", 3),
-  createCity
-);
-router.get("/cities", authMiddleware, getAllCities);
-router.get("/cities/:id", authMiddleware, getCityById);
-router.put(
-  "/cities/:id",
-  authMiddleware,
-  upload.array("swipperPhoto", 3),
-  updateCityById
-);
-router.delete("/cities/:id", authMiddleware, deleteCityById);
+router.post("/cities", upload.array("swipperPhoto", 3), createCity);
+router.get("/cities", getAllCities);
+router.get("/cities/:id", getCityById);
+router.put("/cities/:id", upload.array("swipperPhoto", 3), updateCityById);
+router.delete("/cities/:id", deleteCityById);
 
 export default router;
