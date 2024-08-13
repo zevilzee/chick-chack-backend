@@ -5,6 +5,7 @@ import {
   getUserById,
   updateUserById,
   deleteUserById,
+  signin,
 } from "../controllers/userController.js";
 import authMiddleware from "../middlewares/JwtAuth.js";
 import upload from "../middlewares/upload.js";
@@ -20,5 +21,5 @@ router.put(
   updateUserById
 );
 router.delete("/users/:id", deleteUserById);
-
+router.post("/signin", signin);
 export default router;
