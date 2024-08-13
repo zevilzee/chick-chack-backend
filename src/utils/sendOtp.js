@@ -13,10 +13,10 @@ export async function sendOTP(phone) {
   };
 
   const snsClient = new SNSClient({
-    region: "eu-north-1",
+    region: process.env.REGION,
     credentials: {
-      accessKeyId: "AKIAQGYBPPHCKW7ZNZ3K",
-      secretAccessKey: "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",
+      accessKeyId: process.env.ACCESS_Key,
+      secretAccessKey: process.env.SECRET_ACCESS_KEY,
     },
   });
 
