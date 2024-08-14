@@ -41,6 +41,21 @@ export const getUserById = async (req, res) => {
   }
 };
 
+// Get a user by phone number
+export const getUserByPhone = async (req, res) => {
+  try {
+    const { phone } = req.params;
+    const user = await UserModel.findOne({ phone: phone });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+
 // Update a user by ID
 export const updateUserById = async (req, res) => {
   try {
