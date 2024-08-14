@@ -3,6 +3,7 @@ import {
   createItem,
   getAllItems,
   getItemById,
+  getItemAdditionsByItemId,
   updateItemById,
   deleteItemById,
 } from "../controllers/ShopItemController.js";
@@ -14,6 +15,7 @@ const router = express.Router();
 router.post("/items", upload.single("itemPhoto"), createItem);
 router.get("/items", getAllItems);
 router.get("/items/:id", getItemById);
+router.get("/items/AdditionItem/:id", getItemAdditionsByItemId);
 router.put(
   "/items/:id",
 
