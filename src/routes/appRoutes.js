@@ -3,7 +3,7 @@ import {
     createAppInfo,
     getAppInfo,
     updateAppInfo,
-} from "../controllers/userController.js";
+} from "../controllers/AppController.js";
 import authMiddleware from "../middlewares/JwtAuth.js";
 
 const router = express.Router();
