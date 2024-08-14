@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import { connectDB } from "./src/config/config.js";
+import AppInfoRouter from "./src/routes/appRoutes.js";
 import userRouter from "./src/routes/userRoutes.js";
 import cityRouter from "./src/routes/CityRoutes.js";
 import categoryRouter from "./src/routes/CategoryRoutes.js";
@@ -24,6 +25,7 @@ const dbConnection = async () => {
 dbConnection();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use("/AppInfo", AppInfoRouter);
 app.use("/images", express.static("uploads"));
 app.use("/user", userRouter);
 app.use("/city", cityRouter);

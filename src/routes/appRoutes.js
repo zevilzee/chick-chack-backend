@@ -8,8 +8,8 @@ import authMiddleware from "../middlewares/JwtAuth.js";
 
 const router = express.Router();
 
-router.post("/App", createAppInfo);
-router.get("/App", getAppInfo);
-router.put("/App", updateAppInfo);
+router.post("/", createAppInfo);
+router.get("/", getAppInfo);
+router.put("/", updateAppInfo);
 
 export default router;
