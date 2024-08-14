@@ -34,6 +34,20 @@ export const getAppInfo = async (req, res) => {
     }
 };
 
+// Get appInfo by ID
+export const getAppInfoById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const appInfo = await AppInfo.findById(id);
+        if (!appInfo) {
+            return res.status(404).json({ error: "AppInfo not found" });
+        }
+        res.status(200).json(appInfo);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
 // Update the appInfo
 export const updateAppInfo = async (req, res) => {
     try {
