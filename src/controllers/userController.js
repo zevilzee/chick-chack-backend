@@ -91,13 +91,8 @@ export const deleteUserById = async (req, res) => {
 export const sendOtpCode = async (req, res) => {
   try {
     const { phone } = req.body;
-    const user = await UserModel.findOne({ phone: phone });
-    if (user) {
-      const otpCode = await sendOTP(user.phone);
-      res.status(200).json({ otpCode: otpCode });
-    } else {
-      res.status(404).json({ error: "User not found" });
-    }
+    const otpCode = await sendOTP(phone);
+    res.status(200).json({ otpCode: otpCode });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
