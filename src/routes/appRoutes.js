@@ -1,15 +1,14 @@
 import express from "express";
 import {
-    createAppInfo,
-    getAppInfo,
-    updateAppInfo,
+  createAppInfo,
+  getAppInfo,
+  updateAppInfo,
 } from "../controllers/AppController.js";
-import authMiddleware from "../middlewares/JwtAuth.js";
 
 const router = express.Router();
 
 router.post("/", createAppInfo);
 router.get("/", getAppInfo);
-router.put("/", updateAppInfo);
+router.put("/:id", updateAppInfo); // Added `:id` for update endpoint
 
 export default router;
