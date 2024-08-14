@@ -6,7 +6,8 @@ import {
   updateUserById,
   deleteUserById,
   signin,
-  getUserByPhone // Import the new function
+  sendOtpCode,
+  getUserByPhone
 } from "../controllers/userController.js";
 import authMiddleware from "../middlewares/JwtAuth.js";
 import upload from "../middlewares/upload.js";
@@ -19,6 +20,7 @@ router.get("/users/:id", getUserById);
 router.put("/users/:id", upload.single("profile"), updateUserById);
 router.delete("/users/:id", deleteUserById);
 router.post("/signin", signin);
-router.get("/users/phone/:phone", getUserByPhone); // Add the new route
+router.post("/send-otp", sendOtpCode); 
+router.get("/users/phone/:phone", getUserByPhone);
 
 export default router;
