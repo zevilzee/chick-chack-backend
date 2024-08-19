@@ -54,6 +54,23 @@ export const getItemById = async (req, res) => {
   }
 };
 
+// Get additional items by item ID
+export const getItemAdditionsByItemId = async (req, res) => {
+  try {
+    // Find the item by ID and populate the itemAdditions field
+    const item = await Item.findById(req.params.id).populate('itemAdditions');
+
+    if (!item) {
+      return res.status(404).json({ error: "Item not found" });
+    }
+
+    // Return the populated itemAdditions field
+    res.status(200).json(item.itemAdditions);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 // Update an item by ID
 export const updateItemById = async (req, res) => {
   try {
