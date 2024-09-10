@@ -70,15 +70,32 @@ export const deleteAppointmentById = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+// Get appointments by Shop ID
 export const getAppointmentByShopId = async (req, res) => {
   try {
-    const appointment = await Appointment.find({ shopId: req.params.id })
+    const appointments = await Appointment.find({ shopId: req.params.id })
       .populate("shopId")
       .populate("userId");
-    if (!appointment) {
-      return res.status(404).json({ error: "Appointment not found" });
+    if (!appointments.length) {
+      return res.status(404).json({ error: "No appointments found for this shop" });
     }
-    res.status(200).json(appointment);
+    res.status(200).json(appointments);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// Get appointments by User ID
+export const getAppointmentByUserId = async (req, res) => {
+  try {
+    const appointments = await Appointment.find({ userId: req.params.id })
+      .populate("shopId")
+      .populate("userId");
+    if (!appointments.length) {
+      return res.status(404).json({ error: "No appointments found for this user" });
+    }
+    res.status(200).json(appointments);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

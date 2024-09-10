@@ -6,8 +6,8 @@ import {
   updateAppointmentById,
   deleteAppointmentById,
   getAppointmentByShopId,
+  getAppointmentByUserId
 } from "../controllers/AppointmentController.js";
-import authMiddleware from "../middlewares/JwtAuth.js";
 
 const router = express.Router();
 
@@ -17,5 +17,6 @@ router.get("/appointments/:id", getAppointmentById);
 router.put("/appointments/:id", updateAppointmentById);
 router.delete("/appointments/:id", deleteAppointmentById);
 router.get("/appointments/shop/:id", getAppointmentByShopId);
+router.get("/appointments/user/:id", getAppointmentByUserId); 
 
 export default router;
