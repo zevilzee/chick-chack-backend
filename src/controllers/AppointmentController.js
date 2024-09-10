@@ -3,6 +3,7 @@ import Appointment from "../models/AppointmentModel.js";
 // Create a new appointment
 export const createAppointment = async (req, res) => {
   try {
+    console.log(req.body); // Log the request body for debugging
     const newAppointment = new Appointment(req.body);
     await newAppointment.save();
     res.status(201).json(newAppointment);
