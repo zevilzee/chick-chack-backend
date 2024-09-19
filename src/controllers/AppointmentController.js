@@ -77,10 +77,9 @@ export const getAppointmentByShopId = async (req, res) => {
     const appointments = await Appointment.find({ shopId: req.params.id })
       .populate("shopId")
       .populate("userId");
-    if (!appointments.length) {
-      return res.status(404).json({ error: "No appointments found for this shop" });
-    }
-    res.status(200).json(appointments);
+
+    // Return 200 and an empty array if no appointments are found
+    res.status(200).json(appointments.length ? appointments : []);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -92,11 +91,11 @@ export const getAppointmentByUserId = async (req, res) => {
     const appointments = await Appointment.find({ userId: req.params.id })
       .populate("shopId")
       .populate("userId");
-    if (!appointments.length) {
-      return res.status(404).json({ error: "No appointments found for this user" });
-    }
-    res.status(200).json(appointments);
+
+    // Return 200 and an empty array if no appointments are found
+    res.status(200).json(appointments.length ? appointments : []);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
